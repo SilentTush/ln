@@ -2,49 +2,77 @@
 #include<stdlib.h>
 #include<string.h>
 
-int main()
+void main()
 {
+	FILE *ptr1,*ptr2,*ptr3,*ptr4;
 	int p,l,m,o;
-	char check[4], name[20], pass[20], regc[9] = "register", y[4] = "yes", yc[4] , ycc[20], pc[20];
-	printf("want to register or login");
+	char check[4], name[20], pass[20], regc[2] = "r", y[4] = "yes", yc[4] , name_buff[20], pc[20], ycc[20];
+	printf("Want to register or login \n (use r and n)");
 	scanf("%s", &check);
-	p = strcmp(regc,check);
-if (p == 0)
+	p = strcmp(regc,check); //using this for registration
+if (p == 0) // 0 us given when strcmp checks and finds the values to be exact same
 {
-	printf("enter name");
+	printf("\n enter name");
 	scanf("%s", &name);
-	printf("enter password");
+	printf("\n enter password");
 	scanf("%s", &pass);
-	printf("registration sucessfull want to login");
+    ptr1 = fopen("name.txt","w");
+    ptr2 = fopen("pass.txt","w");
+      if (ptr1 == NULL) 
+    { 
+        printf("Could not open file"); 
+        return ; 
+    }
+    if (ptr2 == NULL) 
+    { 
+        printf("Could not open file"); 
+        return ; 
+    }
+    fprintf(ptr1, "%s",name);
+    fprintf(ptr2, "%s",pass);
+	printf("\n registration sucessfull want to login");
 	scanf("%s", &yc);
+	system("cls");
 	o = strcmp(yc, y);
 
 	if (o == 0) 
 	{
-            printf("enter username");
+            printf("\n enter username");
             scanf("%s", &ycc);
-            printf("enter password");
+            printf("\n enter password");
             scanf("%s", &pc);
-            l = strcmp(name , ycc);
+            ptr3 = fopen("name.txt","r");
+            if (ptr3 == NULL) 
+    { 
+        printf("Could not open file"); 
+        return ; 
+    }
+            fgets(name_buff,20, ptr3);
+            printf("%s", name_buff);
+            l = strcmp(name_buff , ycc);
             m = strcmp(pass , pc);
             if (l == 0 , m == 0)
             {
-            	printf("logged in sucessfully");
+            	printf("\n logged in sucessfully");
             	system("pause");
             }     
             else
             {
-            	printf("wrong password");
+            	printf("\n wrong password");
             	system("pause");
             }
+	}
+	else 
+	{
+		system("pause");
 	}
 
 }
 else 
 {
 
-	printf("nikal,pehli fursat me nikal");
+	printf("\n nikal,pehli fursat me nikal");
 	system("pause");
 }
-return 0;
+return ;
 }
